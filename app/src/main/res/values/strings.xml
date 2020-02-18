@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">MyData</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="swipe_left_for_register">Swipe Left for Register</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="e_mail_phone_no">Email/Phone Number</string>
+    <string name="e_mail">Email</string>
+    <string name="e_phone_no">Phone Number</string>
+    <string name="tag">Join us and \nBuild your relationship with others.</string>
+    <string name="swipe_right_for_login">Swipe Right for Login</string>
+    <string name="register">Register</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="re_type_password">Re-type Password</string>
+    <string name="your_name">Full Name</string>
+    <string name="e_customer_name">Customer Name</string>
+    <string name="e_customer_location">Location</string>
+    <string name="e_customer_requirement">Requirement</string>
+    <string name="e_customer_budget">Budget</string>
+    <string name="e_customer_info_date">Info Date</string>
+    <string name="save">Save</string>
+    <string name="enter_cust_detail">Enter Customer Detail</string>
+    <string name="title_activity_dash_board">Your Customer Base</string>
+    <string name="logout">Logout</string>
+    <string name="e_customer_folow_up_date">Follow Up Date</string>
+    <string name="update_cust_info">Update Details</string>
+    <string name="notification_title">Follow Up</string>
+    <string name="notification_text">Follow Up Today</string>
+    <string name="reset">Reset Your password here...</string>
+</resources>

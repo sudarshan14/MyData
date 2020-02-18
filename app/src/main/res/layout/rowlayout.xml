@@ -1,0 +1,184 @@
+<!--<?xml version="1.0" encoding="utf-8"?>--><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:background="?android:attr/selectableItemBackground"--><!--android:orientation="vertical">--><!--&lt;!&ndash;--><!--items for a single row of RecyclerView--><!--&ndash;&gt;--><!--<TextView--><!--android:id="@+id/custName"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_margin="10dp"--><!--android:textColor="#000"--><!--android:textSize="20sp" />-->
+
+<!--<TextView--><!--android:id="@+id/custPhoneNo"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_margin="10dp"--><!--android:textColor="#000"--><!--android:textSize="20sp" />-->
+
+<!--<TextView--><!--android:id="@+id/custLocation"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_margin="10dp"--><!--android:textColor="#000"--><!--android:textSize="20sp" />-->
+
+<!--<TextView--><!--android:id="@+id/custRequirement"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_margin="10dp"--><!--android:textColor="#000"--><!--android:textSize="20sp" />-->
+
+<!--<TextView--><!--android:id="@+id/custBudget"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_margin="10dp"--><!--android:textColor="#000"--><!--android:textSize="20sp" />-->
+
+<!--<TextView--><!--android:id="@+id/custInfoTakenOn"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_margin="10dp"--><!--android:textColor="#000"--><!--android:textSize="20sp" />--><!--</LinearLayout>-->
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="@dimen/activity_vertical_margin"
+    app:cardElevation="@dimen/activity_vertical_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageViewCustomer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="16dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/custName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageViewCustomer"
+            android:text="@string/e_customer_name"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/custPhoneNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/custName"
+            android:layout_toRightOf="@+id/imageViewCustomer"
+            android:text="@string/e_phone_no"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/custLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/custPhoneNo"
+            android:layout_toRightOf="@+id/imageViewCustomer"
+            android:text="@string/e_customer_location"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/custRequirement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/custPhoneNo"
+            android:layout_toRightOf="@+id/custLocation"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:text="@string/e_customer_requirement"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/custBudget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/custPhoneNo"
+            android:layout_toRightOf="@+id/custRequirement"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:text="@string/e_customer_budget"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/custInfoTakenOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/custBudget"
+            android:layout_toRightOf="@+id/imageViewCustomer"
+            android:text="@string/e_customer_info_date" />
+
+        <TextView
+            android:id="@+id/custFollowUpDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/custBudget"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/custInfoTakenOn"
+            android:text="@string/e_customer_info_date" />
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/shareLayout"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/custInfoTakenOn"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:weightSum="2">-->
+
+        <!--<ImageButton-->
+        <!--android:foregroundGravity="center"-->
+        <!--android:id="@+id/imageViewShare"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="@drawable/ic_action_share"-->
+        <!--android:visibility="visible" />-->
+
+        <!--<ImageButton-->
+        <!--android:id="@+id/imageViewCall"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+
+
+        <!--android:background="@drawable/ic_action_call"-->
+        <!--android:visibility="visible" />-->
+        <!--</LinearLayout>-->
+
+        <LinearLayout
+            android:id="@+id/shareLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/custInfoTakenOn"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+
+            <ImageView
+                android:id="@+id/imageShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_share" />
+
+
+            <ImageView
+                android:id="@+id/imageCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_call" />
+
+
+            <ImageView
+                android:id="@+id/imageEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_edit" />
+
+            <ImageView
+                android:id="@+id/imageDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_delete" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
