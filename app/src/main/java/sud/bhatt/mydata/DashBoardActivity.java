@@ -14,8 +14,10 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -47,7 +49,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
 
     Button saveButton;
-    EditText etFullName, etPhoneNo, etLocation, etRequirement, etBudget, etFollowUpDate;
+    EditText etFullName, etPhoneNo, etLocation, etProjectName, etRequirement, etBudget, etFollowUpDate;
     TextView tv_logo;
     DataService service;
     String apiKey;
@@ -61,62 +63,47 @@ public class DashBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dash_board);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+//        Log.d("lifecycle method","onCreate D");
 
         toolbar.setTitle(LocalDataUtil.getSharedPreference(this, "name", "Hello User"));
 
         saveButton = findViewById(R.id.btn_save_details);
         etFullName = findViewById(R.id.et_customer_name);
         etLocation = findViewById(R.id.et_cust_location);
+        etProjectName = findViewById(R.id.et_cust_project_name);
         etPhoneNo = findViewById(R.id.et_cust_phone_no);
         etRequirement = findViewById(R.id.et_cust_requirement);
         etBudget = findViewById(R.id.et_cust_budget);
         etFollowUpDate = findViewById(R.id.follow_up_date);
         tv_logo = findViewById(R.id.tv_logo);
-
-
-        etFollowUpDate.setOnFocusChangeListener((v, hasFocus) -> {
-            c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(DashBoardActivity.this,
-                    (view, year, monthOfYear, dayOfMonth) -> etFollowUpDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year), mYear, mMonth, mDay);
-            c.set(mYear, mMonth, mDay, 11, 00);
-            datePickerDialog.show();
-        });
-
-//        etFollowUpDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+//        etFollowUpDate.setOnClickListener((v) -> {
 //
-//                c = Calendar.getInstance();
-//                mYear = c.get(Calendar.YEAR);
-//                mMonth = c.get(Calendar.MONTH);
-//                mDay = c.get(Calendar.DAY_OF_MONTH);
-//                DatePickerDialog datePickerDialog = new DatePickerDialog(DashBoardActivity.this,
-//                        new DatePickerDialog.OnDateSetListener() {
 //
-//                            @Override
-//                            public void onDateSet(DatePicker view, int year,
-//                                                  int monthOfYear, int dayOfMonth) {
-//
-//                                etFollowUpDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-//
-//                            }
-//                        }, mYear, mMonth, mDay);
-//                c.set(mYear, mMonth, mDay, 11, 00);
-//                datePickerDialog.show();
-//
-//            }
 //        });
 
-        // etFollowUpDate.setOnK
+        etFollowUpDate.setOnFocusChangeListener((v, hasFocus) -> {
+
+            if (hasFocus) {
+                c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(DashBoardActivity.this,
+                        (view, year, monthOfYear, dayOfMonth) -> etFollowUpDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth), mYear, mMonth, mDay);
+//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                c.set(mYear, mMonth, mDay, 11, 00);
+                datePickerDialog.show();
+            }
+
+        });
+
         service = RetrofitClientInstance.getRetrofitClient();
         apiKey = LocalDataUtil.getSharedPreference(DashBoardActivity.this, "apiKey", "");
 
         saveButton.setOnClickListener(v -> {
-            InputMethodManager imm =(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             if (saveButton.getText().equals(getResources().getString(R.string.update_cust_info))) {
                 try {
@@ -143,6 +130,7 @@ public class DashBoardActivity extends AppCompatActivity {
             etFullName.setText(extras.getString("custName"));
             etPhoneNo.setText(extras.getString("custPhNo"));
             etLocation.setText(extras.getString("custLocation"));
+            etProjectName.setText(extras.getString("custProjectName"));
             etRequirement.setText(extras.getString("custRequirement"));
             etBudget.setText(extras.getString("custBudget"));
             etFollowUpDate.setText(extras.getString("custFollowUpDate"));
@@ -157,23 +145,29 @@ public class DashBoardActivity extends AppCompatActivity {
 
     private void updateCustomerDetails() throws ParseException {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+
+
         Util.showProgressBar(DashBoardActivity.this, "Updating Customer Details");
         final String etFullNameText = etFullName.getText().toString();
         final String etLocationText = etLocation.getText().toString();
+        final String etProjectNameText = etProjectName.getText().toString();
         final String etPhoneNoText = etPhoneNo.getText().toString();
         final String etRequirementText = etRequirement.getText().toString();
         final String etBudgetText = etBudget.getText().toString();
-        final String etFollowUpText = sdf2.format(sdf.parse(etFollowUpDate.getText().toString()));
+        final String etFollowUpText = etFollowUpDate.getText().toString() ;
 
-
+        if (Util.isEmpty(etFullNameText, etLocationText, etProjectNameText, etPhoneNoText, etRequirementText)) {
+            Toast.makeText(this, "Enter All Details", Toast.LENGTH_LONG).show();
+            Util.dismissProgressBar();
+            return;
+        }
         if (!Util.isLengthTen(etPhoneNoText)) {
             Toast.makeText(DashBoardActivity.this, "Phone Number is Wrong", Toast.LENGTH_LONG).show();
+            Util.dismissProgressBar();
             return;
         }
 
-        final Call<UpdateInfo> call = service.updateCustomerDetails(apiKey, custId, Util.firstLetterCapital(etFullNameText), etPhoneNoText, Util.firstLetterCapital(etLocationText), etRequirementText, etBudgetText, "", etFollowUpText);
+        final Call<UpdateInfo> call = service.updateCustomerDetails(apiKey, custId, Util.firstLetterCapital(etFullNameText), etPhoneNoText, Util.firstLetterCapital(etLocationText), Util.firstLetterCapital(etProjectNameText), etRequirementText, etBudgetText, "", etFollowUpText);
 
         call.enqueue(new Callback<UpdateInfo>() {
             @Override
@@ -185,9 +179,10 @@ public class DashBoardActivity extends AppCompatActivity {
                 } else {
 
                     if (response.code() == 200) {
-                        if(!response.body().getLerror())
-                        handleUpdateSuccess(response.body().getLmessage(), etFollowUpText);
-                        else if(response.body().getLerror()){
+                        if (!response.body().getLerror()) {
+
+                            handleUpdateSuccess(response.body().getLmessage(), etFollowUpText);
+                        } else if (response.body().getLerror()) {
                             handleFailure(response.body().getLmessage());
                         }
                     } else {
@@ -209,33 +204,41 @@ public class DashBoardActivity extends AppCompatActivity {
     private void createCustomerDetails() throws ParseException {
 
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+//        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 
         Util.showProgressBar(DashBoardActivity.this, "Saving Customer Details");
         final String etFullNameText = etFullName.getText().toString().trim();
         final String etLocationText = etLocation.getText().toString().trim();
+        final String etProjectNameText = etProjectName.getText().toString().trim();
         final String etPhoneNoText = etPhoneNo.getText().toString().trim();
         final String etRequirementText = etRequirement.getText().toString().trim();
         final String etBudgetText = etBudget.getText().toString().trim();
 
 
-        final String etFollowUpText = sdf2.format(formatter.parse(etFollowUpDate.getText().toString()));
+//        System.out.println(formatter.format(date));
+        if (Util.isEmpty(etFullNameText, etLocationText, etProjectNameText, etPhoneNoText, etRequirementText)) {
+            Toast.makeText(this, "Enter All Details", Toast.LENGTH_LONG).show();
+            Util.dismissProgressBar();
+            return;
+        }
+
+        if (!Util.isLengthTen(etPhoneNoText)) {
+            Toast.makeText(DashBoardActivity.this, "Phone Number is Wrong", Toast.LENGTH_LONG).show();
+            Util.dismissProgressBar();
+            return;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        final String etFollowUpText = etFollowUpDate.getText().toString() ;//formatter.format(formatter.parse(etFollowUpDate.getText().toString()));
 
 //        String etFollowUpText = etFollowUpDate.getText().toString();
 
 
         Date date = new Date();
-        String sdate = formatter.format(date);
-//        System.out.println(formatter.format(date));
+        String visitDate = formatter.format(date);
 
-
-        if (!Util.isLengthTen(etPhoneNoText)) {
-            Toast.makeText(DashBoardActivity.this, "Phone Number is Wrong", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        final Call<UpdateInfo> call = service.createCustInfo(apiKey, Util.firstLetterCapital(etFullNameText), etPhoneNoText, Util.firstLetterCapital(etLocationText), etRequirementText, etBudgetText, sdate, etFollowUpText);
+        final Call<UpdateInfo> call = service.createCustInfo(apiKey, Util.firstLetterCapital(etFullNameText), etPhoneNoText,
+                Util.firstLetterCapital(etLocationText), Util.firstLetterCapital(etProjectNameText),
+                etRequirementText, etBudgetText, visitDate, etFollowUpText);
         call.enqueue(new Callback<UpdateInfo>() {
             @Override
             public void onResponse(Call<UpdateInfo> call, Response<UpdateInfo> response) {
@@ -247,9 +250,9 @@ public class DashBoardActivity extends AppCompatActivity {
 
                     if (response.code() == 201) {
 
-                        if(!response.body().getLerror())
-                        handleSuccess(response.body().getLmessage(), etFollowUpText);
-                        else if(response.body().getLerror()){
+                        if (!response.body().getLerror())
+                            handleSuccess(response.body().getLmessage(), etFollowUpText);
+                        else if (response.body().getLerror()) {
                             handleFailure(response.body().getLmessage());
                         }
                     } else {
@@ -336,13 +339,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
     private void handleUpdateSuccess(String response, String date) {
 
-        etFullName.setText("");
-        etPhoneNo.setText("");
-        etLocation.setText("");
-        etRequirement.setText("");
-        etBudget.setText("");
-        etFollowUpDate.setText("");
-
+        resetEditTextValues();
 //        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 //        Intent intent = new Intent(this, AlarmReceiver.class);
 //        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
@@ -353,6 +350,7 @@ public class DashBoardActivity extends AppCompatActivity {
                 .setAction("Action", null).show();
         //  Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         Util.dismissProgressBar();
+        startActivity(new Intent(DashBoardActivity.this, CustInfoActivity.class));
         this.finish();
 //        Util.setFollowUpDateAlarm(DashBoardActivity.this,  date.substring(0,4),date.substring(5,7), date.substring(8,10) );
 //        Util.setFollowUpDateAlarmJobScheduler(DashBoardActivity.this,  date.substring(0,4),date.substring(5,7), date.substring(8,10) );
@@ -364,12 +362,7 @@ public class DashBoardActivity extends AppCompatActivity {
         Snackbar.make(view, response, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
 
-        etFullName.setText("");
-        etPhoneNo.setText("");
-        etLocation.setText("");
-        etRequirement.setText("");
-        etBudget.setText("");
-        etFollowUpDate.setText("");
+        resetEditTextValues();
 
 //        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 //        Intent intent = new Intent(this, AlarmReceiver.class);
@@ -380,6 +373,16 @@ public class DashBoardActivity extends AppCompatActivity {
         Util.dismissProgressBar();
 //        Util.setFollowUpDateAlarm(DashBoardActivity.this,  date.substring(0,3),date.substring(5,6), date.substring(8,9) );
 
+    }
+
+    private void resetEditTextValues() {
+        etFullName.setText("");
+        etPhoneNo.setText("");
+        etLocation.setText("");
+        etRequirement.setText("");
+        etBudget.setText("");
+        etFollowUpDate.setText("");
+        etProjectName.setText("");
     }
 
 //    private void handleLoginSuccess(CustDetail response) {
@@ -404,5 +407,27 @@ public class DashBoardActivity extends AppCompatActivity {
 
         Util.dismissProgressBar();
     }
-
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        Log.d("lifecycle method","onRestart D");
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Log.d("lifecycle method","onResume D");
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        Log.d("lifecycle method","onPause D");
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        Log.d("lifecycle method","onDestroy D");
+//    }
 }

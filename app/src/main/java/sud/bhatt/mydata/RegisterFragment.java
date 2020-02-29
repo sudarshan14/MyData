@@ -65,21 +65,25 @@ public class RegisterFragment extends Fragment {
                 String etRePasswordText = etRePassword.getText().toString();
 
 
-                if (isEmpty(etFullNameText, etEmailText, etPhoneNoText, etPasswordText, etRePasswordText)) {
+                if (Util.isEmpty(etFullNameText, etEmailText, etPhoneNoText, etPasswordText, etRePasswordText)) {
                     Toast.makeText(getActivity(), "Enter All Details", Toast.LENGTH_LONG).show();
+                    Util.dismissProgressBar();
                     return;
                 }
 
                 if (!Util.isEmailCorrect(etEmailText)) {
                     Toast.makeText(getActivity(), "Email pattern is wrong", Toast.LENGTH_LONG).show();
+                    Util.dismissProgressBar();
                     return;
                 }
                 if (!Util.isLengthTen(etPhoneNoText)) {
                     Toast.makeText(getActivity(), "Phone Number is Wrong", Toast.LENGTH_LONG).show();
+                    Util.dismissProgressBar();
                     return;
                 }
                 if (!Util.isPasswordSame(etPasswordText, etRePasswordText)) {
                     Toast.makeText(getActivity(), "Password do not match", Toast.LENGTH_LONG).show();
+                    Util.dismissProgressBar();
                     return;
                 }
 
@@ -120,17 +124,6 @@ public class RegisterFragment extends Fragment {
 
     }
 
-    private boolean isEmpty(String etFullNameText, String etEmailText, String etPhoneNoText, String etPasswordText, String etRePasswordText) {
-        //  boolean result = true;
-
-
-        if (TextUtils.isEmpty(etFullNameText) || TextUtils.isEmpty(etEmailText) || TextUtils.isEmpty(etPhoneNoText) || TextUtils.isEmpty(etPasswordText) || TextUtils.isEmpty(etRePasswordText)) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 
 
     private void handleLoginSuccess(String response) {

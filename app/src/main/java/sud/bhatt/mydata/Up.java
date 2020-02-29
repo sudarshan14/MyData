@@ -6,6 +6,8 @@ import androidx.annotation.RequiresApi;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Up {
 
@@ -22,21 +24,23 @@ public class Up {
 //        }
 //
 //        System.out.println(nameCapitalized);
-
-//        String startDateString = "08-12-2017";
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        System.out.println(LocalDate.parse(startDateString, formatter).format(formatter2));
-
         try {
+            String startDateString = "29-02-2020";
 
-            String title = null;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            System.out.println(formatter.format(formatter.parse(startDateString)));
+            System.out.println(LocalDate.parse(startDateString, formatter).format(formatter2));
 
-            if ("Hello".equalsIgnoreCase(title)) {
-                System.out.println("hello");
-            } else {
-                System.out.println("no hello");
-            }
+//        try {
+//
+//            String title = null;
+//
+//            if ("Hello".equalsIgnoreCase(title)) {
+//                System.out.println("hello");
+//            } else {
+//                System.out.println("no hello");
+//            }
 //            String startDateString = "08-12-2017";
 //            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 //            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");

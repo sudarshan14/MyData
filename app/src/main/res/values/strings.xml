@@ -27,4 +27,5 @@
     <string name="notification_title">Follow Up</string>
     <string name="notification_text">Follow Up Today</string>
     <string name="reset">Reset Your password here...</string>
+    <string name="e_customer_project">Project Name</string>
 </resources>

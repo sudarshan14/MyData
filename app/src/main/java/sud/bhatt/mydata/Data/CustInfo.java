@@ -20,15 +20,23 @@ public class CustInfo {
     @SerializedName("u_location")
     @Expose
     private String uLocation;
+
+    @SerializedName("u_project_name")
+    @Expose
+    private String uProjectName;
+
     @SerializedName("u_requirement")
     @Expose
     private String uRequirement;
+
     @SerializedName("u_budget")
     @Expose
     private String uBudget;
+
     @SerializedName("info_date")
     @Expose
     private String infoDate;
+
 
     @SerializedName("follow_up_date")
     @Expose
@@ -57,6 +65,10 @@ public class CustInfo {
 
     public void setUMobileNum(Long uMobileNum) {
         this.uMobileNum = uMobileNum;
+    }
+
+    public String getuProjectName() {
+        return uProjectName;
     }
 
     public String getULocation() {

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Patterns;
 
 import java.util.Calendar;
@@ -29,6 +30,19 @@ public class Util {
 
         return LocalDataUtil.getSharedPreference(context, "apiKey", null);
     }
+
+    public static boolean isEmpty(String etFullNameText, String etEmailText, String etPhoneNoText, String etPasswordText, String etRePasswordText) {
+        //  boolean result = true;
+
+
+        if (TextUtils.isEmpty(etFullNameText) || TextUtils.isEmpty(etEmailText) || TextUtils.isEmpty(etPhoneNoText) || TextUtils.isEmpty(etPasswordText) || TextUtils.isEmpty(etRePasswordText)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 
 
     public static boolean isPasswordSame(String etPasswordText, String etRePasswordText) {

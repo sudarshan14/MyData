@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +58,8 @@ public class CustInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cust_info);
         Util.showProgressBar(this, "Fetching Customer Details...");
+
+        Log.d("lifecycle method","onCreate");
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //        toolbar.setTitle(LocalDataUtil.getSharedPreference(this, "name", "Hello User"));
@@ -108,6 +112,7 @@ public class CustInfoActivity extends AppCompatActivity {
                     bundle.putString("custName", custInfos.get(lposition).getUName());
                     bundle.putString("custPhNo", "" + custInfos.get(lposition).getUMobileNum());
                     bundle.putString("custLocation", custInfos.get(lposition).getULocation());
+                    bundle.putString("custProjectName", custInfos.get(lposition).getuProjectName());
                     bundle.putString("custRequirement", custInfos.get(lposition).getURequirement());
                     bundle.putString("custBudget", custInfos.get(lposition).getUBudget());
                     bundle.putString("custFollowUpDate", custInfos.get(lposition).getFollowUpDate());
@@ -208,9 +213,10 @@ public class CustInfoActivity extends AppCompatActivity {
                 "\n Location:" + custInfo.getULocation() +
                 "\n Requirement:" + custInfo.getURequirement() +
                 "\n Budget:" + custInfo.getUBudget() +
-                "\n Customer is with us since:" + custInfo.getInfoDate().substring(0, 10) +
-                "\n \n Please Connect with him on the below Number: " + custInfo.getUMobileNum()+
-                " on the following date" + custInfo.getFollowUpDate();
+                "\n Visited On:" + custInfo.getInfoDate().substring(0, 10) +
+                "\n Project Visited: "+custInfo.getuProjectName()+
+                "\n \n Please Connect with the customer on the following Number: " + custInfo.getUMobileNum()+
+                " on the following date: " + custInfo.getFollowUpDate();
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
 //        if (imageUri != null)
 //            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
@@ -365,4 +371,28 @@ public class CustInfoActivity extends AppCompatActivity {
 
         return true;
     }
+
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        Log.d("lifecycle method","onRestart");
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Log.d("lifecycle method","onResume");
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        Log.d("lifecycle method","onPause");
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        Log.d("lifecycle method","onDestroy");
+//    }
 }

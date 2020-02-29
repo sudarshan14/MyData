@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import sud.bhatt.mydata.Data.LoginUser;
 import sud.bhatt.mydata.Data.LoginUserDetail;
 import sud.bhatt.mydata.LoginUtil.LocalDataUtil;
 import sud.bhatt.mydata.LoginUtil.Util;
@@ -75,8 +76,8 @@ public class LoginFragment extends Fragment {
                 return;
             }
 
-
-            final Call<LoginUserDetail> call = service.initiateLogin(etEmailText, etPasswordText);
+//            LoginUser user = new LoginUser(etEmailText, etPasswordText);
+            final Call<LoginUserDetail> call =service.initiateLogin(etEmailText, etPasswordText); //service.initiateLogin(user); //
             call.enqueue(new Callback<LoginUserDetail>() {
                 @Override
                 public void onResponse(Call<LoginUserDetail> call, Response<LoginUserDetail> response) {
