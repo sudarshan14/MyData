@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,25 +72,31 @@ public class LoginFragment extends Fragment {
             String etEmailText = etEmail.getText().toString();
             String etPasswordText = etPassword.getText().toString();
 
-            if (etEmailText.equalsIgnoreCase("") && etPasswordText.equalsIgnoreCase("")) {
+            if (etEmailText.equalsIgnoreCase("") || etPasswordText.equalsIgnoreCase("")) {
                 Toast.makeText(getActivity(), "Enter Details", Toast.LENGTH_LONG).show();
                 Util.dismissProgressBar();
                 return;
             }
 
 //            LoginUser user = new LoginUser(etEmailText, etPasswordText);
-            final Call<LoginUserDetail> call =service.initiateLogin(etEmailText, etPasswordText); //service.initiateLogin(user); //
+
+            final Call<LoginUserDetail> call = service.initiateLogin(etEmailText, etPasswordText); //service.initiateLogin(user); //
             call.enqueue(new Callback<LoginUserDetail>() {
                 @Override
                 public void onResponse(Call<LoginUserDetail> call, Response<LoginUserDetail> response) {
 
                     if (!response.isSuccessful()) {
                         APIError error = ErrorUtils.parseError(response);
-                        if (error != null)
+                        if (error.message() != null)
                             handleLoginFailure(error.message());
+                        else if (response.code() == 500) {
+                            handleLoginFailure("Something went wrong. Please try again.");
+                        }
 //                        Log.d("error message", error.message());
                     } else {
-
+//                        Toast.makeText(getActivity(),"error"+response.body(), Toast.LENGTH_LONG).show();
+                        //   Toast.makeText(getActivity(),"getmessage"+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(),""+response.code()+""+response.body().getError(), Toast.LENGTH_LONG).show();
                         if (response.body().getError()) {
                             handleLoginFailure(response.body().getMessage());
                         } else {
@@ -113,7 +121,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void handleLoginSuccess(LoginUserDetail response) {
-
+      //  Toast.makeText(getActivity(), "Enter Details", Toast.LENGTH_LONG).show();
         String name = response.getName();
         String emailId = response.getEmail();
         String apiKey = response.getApiKey();
@@ -131,6 +139,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void handleLoginFailure(String message) {
+        //  Toast.makeText(getActivity(), "Enter Details", Toast.LENGTH_LONG).show();
         etPassword.setText("");
         Util.dismissProgressBar();
         RelativeLayout view = getActivity().findViewById(R.id.relativeLayout);

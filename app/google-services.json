@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "167877076236",
+    "firebase_url": "https://my-leads-cc062.firebaseio.com",
+    "project_id": "my-leads-cc062",
+    "storage_bucket": "my-leads-cc062.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167877076236:android:a2783b4e6791d458365529",
+        "android_client_info": {
+          "package_name": "sud.bhatt.mydata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167877076236-es7jtrejc4j3i4i521e601se00bmefft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtjkb_c6mEGkoqjMGWKvP2atwihlINiGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167877076236-es7jtrejc4j3i4i521e601se00bmefft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

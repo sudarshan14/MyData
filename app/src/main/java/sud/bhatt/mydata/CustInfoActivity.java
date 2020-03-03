@@ -53,6 +53,7 @@ public class CustInfoActivity extends AppCompatActivity {
     ProgressDialog progressBar;
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

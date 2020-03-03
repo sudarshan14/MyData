@@ -1,5 +1,6 @@
 package sud.bhatt.mydata.retrofithelper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -35,9 +36,8 @@ public interface DataService {
     Call<LoginUserDetail> initiateLogin(@Field("mobile_no") String mobileNo, @Field("password") String password);
 
 
-//    @FormUrlEncoded
 //    @POST("login")
-//    Call<LoginUserDetail> initiateLogin(@Body LoginUser user);
+//    Call<LoginUserDetail> initiateLogin(@Body HashMap<String,String> user);
 
     @FormUrlEncoded
     @POST("register")

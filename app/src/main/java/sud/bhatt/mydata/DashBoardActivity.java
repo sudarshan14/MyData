@@ -263,7 +263,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UpdateInfo> call, Throwable t) {
-
+                handleFailure("Something went wrong Please try again.");
             }
         });
 

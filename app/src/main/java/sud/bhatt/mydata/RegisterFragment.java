@@ -95,7 +95,10 @@ public class RegisterFragment extends Fragment {
 
                         if (!response.isSuccessful()) {
                             APIError error = ErrorUtils.parseError(response);
-                            handleLoginFailure(error.message());
+                            if(error.message() != null)
+                             handleLoginFailure(error.message());
+                            else
+                                handleLoginFailure("Something went wrong Please try again.");
                             Log.d("error message", error.message());
                         } else {
 
